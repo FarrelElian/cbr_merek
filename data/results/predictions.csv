@@ -1,0 +1,6 @@
+query_id,predicted_solution,top_5_case_ids
+Q001,GUGATAN DITOLAK,"putusan_172_k_pdt.sus-hki_2024_20260503011819, putusan_1051_k_pdt.sus-hki_2023_20260604093712, putusan_532_k_pdt.sus-hki_2024_20260507042517, putusan_365_k_pdt.sus-hki_2023_20260605192112, putusan_10_pk_pdt.sus-hki_2024_20260509122228"
+Q002,GUGATAN DITOLAK,"putusan_1060_k_pdt.sus-hki_2023_20260604102858, putusan_172_k_pdt.sus-hki_2024_20260503011819, putusan_532_k_pdt.sus-hki_2024_20260507042517, putusan_365_k_pdt.sus-hki_2023_20260605192112, putusan_10_pk_pdt.sus-hki_2024_20260509122228"
+Q003,GUGATAN DITOLAK,"putusan_365_k_pdt.sus-hki_2023_20260605192112, putusan_465_k_pdt.sus-hki_2023_20260605192003, putusan_10_pk_pdt.sus-hki_2024_20260509122228, putusan_61_pk_pdt.sus-hki_2024_20260509111946, putusan_532_k_pdt.sus-hki_2024_20260507042517"
+Q004,GUGATAN DITOLAK,"putusan_172_k_pdt.sus-hki_2024_20260503011819, putusan_532_k_pdt.sus-hki_2024_20260507042517, putusan_11_pk_pdt.sus-hki_2023_20260605192024, putusan_365_k_pdt.sus-hki_2023_20260605192112, putusan_10_pk_pdt.sus-hki_2024_20260509122228"
+Q005,GUGATAN DITOLAK,"putusan_172_k_pdt.sus-hki_2024_20260503011819, putusan_365_k_pdt.sus-hki_2023_20260605192112, putusan_532_k_pdt.sus-hki_2024_20260507042517, putusan_10_pk_pdt.sus-hki_2024_20260509122228, putusan_379_k_pdt.sus-hki_2023_20260605191235"

@@ -1,0 +1,3 @@
+Metric,Score,Description
+Hit_Rate@5,0.8333333333333334,Persentase kasus relevan berhasil masuk Top-5
+MRR@5,0.5277777777777778,Mean Reciprocal Rank (Kualitas urutan hasil pencarian)

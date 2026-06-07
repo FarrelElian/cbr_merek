@@ -1,0 +1,38 @@
+[
+    {
+        "query_id": "Q001",
+        "query_text": "Terdapat pendaftaran merek terdaftar atas nama pihak lawan yang dinilai memiliki persamaan pada pokoknya dengan merek terkenal milik kami yaitu 'JOLLIBEE'. Objek sengketa adalah merek 'JOLLIBE E' untuk kelas barang yang sejenis. Kami mohon pembatalan pendaftaran merek tersebut karena didasari iktikad tidak baik.",
+        "ground_truth_case_id": "putusan_1051_k_pdt.sus-hki_2023_20260604093712",
+        "ground_truth_solusi": "GUGATAN DIKABULKAN (PEMBATALAN / PENGHAPUSAN MEREK TERGUGAT)"
+    },
+    {
+        "query_id": "Q002",
+        "query_text": "Terdapat pendaftaran merek terdaftar atas nama pihak lawan yang dinilai memiliki persamaan pada pokoknya dengan merek terkenal milik kami yaitu 'SKY WA'. Objek sengketa adalah merek 'SKY' untuk kelas barang yang sejenis. Kami mohon pembatalan pendaftaran merek tersebut karena didasari iktikad tidak baik.",
+        "ground_truth_case_id": "putusan_1060_k_pdt.sus-hki_2023_20260604102858",
+        "ground_truth_solusi": "GUGATAN DITOLAK"
+    },
+    {
+        "query_id": "Q003",
+        "query_text": "Terdapat pendaftaran merek terdaftar atas nama pihak lawan yang dinilai memiliki persamaan pada pokoknya dengan merek terkenal milik kami yaitu 'LOGO ORANG MENUNGGANG KUDA'. Objek sengketa adalah merek 'LOGO ORANG MENUNGGANG KUDA' untuk kelas barang yang sejenis. Kami mohon pembatalan pendaftaran merek tersebut karena didasari iktikad tidak baik.",
+        "ground_truth_case_id": "putusan_10_pk_pdt.sus-hki_2024_20260509122228",
+        "ground_truth_solusi": "GUGATAN DITOLAK"
+    },
+    {
+        "query_id": "Q004",
+        "query_text": "Terdapat pendaftaran merek terdaftar atas nama pihak lawan yang dinilai memiliki persamaan pada pokoknya dengan merek terkenal milik kami yaitu 'PROFIL TANK'. Objek sengketa adalah merek 'TERKENAL' untuk kelas barang yang sejenis. Kami mohon pembatalan pendaftaran merek tersebut karena didasari iktikad tidak baik.",
+        "ground_truth_case_id": "putusan_11_pk_pdt.sus-hki_2023_20260605192024",
+        "ground_truth_solusi": "GUGATAN DITOLAK"
+    },
+    {
+        "query_id": "Q005",
+        "query_text": "Terdapat pendaftaran merek terdaftar atas nama pihak lawan yang dinilai memiliki persamaan pada pokoknya dengan merek terkenal milik kami yaitu 'PT'. Objek sengketa adalah merek 'PT' untuk kelas barang yang sejenis. Kami mohon pembatalan pendaftaran merek tersebut karena didasari iktikad tidak baik.",
+        "ground_truth_case_id": "putusan_122_b_2025_pttun_jkt_20260509111605",
+        "ground_truth_solusi": "GUGATAN DITOLAK"
+    },
+    {
+        "query_id": "Q006",
+        "query_text": "Terdapat pendaftaran merek terdaftar atas nama pihak lawan yang dinilai memiliki persamaan pada pokoknya dengan merek terkenal milik kami yaitu 'SEGI TIGA'. Objek sengketa adalah merek 'SEGITIGA EMAS' untuk kelas barang yang sejenis. Kami mohon pembatalan pendaftaran merek tersebut karena didasari iktikad tidak baik.",
+        "ground_truth_case_id": "putusan_123_k_pdt.sus-hki_2023_20260605192325",
+        "ground_truth_solusi": "GUGATAN DITOLAK"
+    }
+]
