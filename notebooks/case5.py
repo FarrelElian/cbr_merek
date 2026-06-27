@@ -88,59 +88,71 @@ def eval_retrieval(queries, ground_truth, k):
     Mengukur seberapa akurat sistem pencari dokumen kemiripan kosinus.
     
     Metrik yang digunakan:
-    1. Hit Rate@K (Accuracy@K) : Berapa persen query yang dokumen aslinya berhasil ditemukan di Top-K.
-    2. Mean Reciprocal Rank (MRR@K) : Memperhitungkan posisi peringkat berkas yang benar.
+    1. Hit Rate@K: Berapa persen query yang dokumen aslinya berhasil ditemukan di Top-K.
+    2. Mean Reciprocal Rank (MRR@K): Memperhitungkan posisi peringkat berkas yang benar.
+    3. Accuracy (Hit@1): Apakah dokumen relevan ada di peringkat 1.
+    4. Precision@K: Proporsi dokumen relevan di Top-K (1/K jika hit).
+    5. Recall@K: Sama dengan Hit Rate@K (karena hanya 1 dokumen relevan per query).
+    6. F1-Score@K: Harmonic mean dari Precision dan Recall.
     """
-    hits = 0
+    hits_k = 0
+    hits_1 = 0
     reciprocal_ranks = []
     evaluation_logs = []
     
-    # Loop setiap query -> hitung metrics
     for q_data, gt_id in zip(queries, ground_truth):
         query_text = q_data["query_text"]
         query_id = q_data["query_id"]
         
-        # Jalankan retrieval untuk query ini
         retrieved_ids = retrieve_for_eval(query_text, k=k)
         
-        # 1. Cek Hit Rate (Apakah Ground Truth case_id ada di dalam Top-K?)
-        is_hit = 1 if gt_id in retrieved_ids else 0
-        hits += is_hit
+        is_hit_k = 1 if gt_id in retrieved_ids else 0
+        is_hit_1 = 1 if len(retrieved_ids) > 0 and gt_id == retrieved_ids[0] else 0
         
-        # 2. Cek Reciprocal Rank
+        hits_k += is_hit_k
+        hits_1 += is_hit_1
+        
         rank_val = 0
-        if gt_id in retrieved_ids:
+        if is_hit_k:
             rank_index = retrieved_ids.index(gt_id)
-            rank_val = 1 / (rank_index + 1) # Peringkat 1 mendapat nilai 1.0, Peringkat 2 mendapat 0.5, dst.
+            rank_val = 1 / (rank_index + 1)
         reciprocal_ranks.append(rank_val)
         
         evaluation_logs.append({
             "query_id": query_id,
             "ground_truth_case": gt_id,
-            "is_hit_at_k": is_hit,
-            "reciprocal_rank": rank_val,
-            "retrieved_cases": ", ".join(retrieved_ids)
+            "is_hit_at_k": is_hit_k,
+            "is_hit_at_1": is_hit_1,
+            "reciprocal_rank": rank_val
         })
         
-    # Hitung nilai rata-rata keseluruhan query
-    avg_hit_rate = hits / len(queries)
+    # Perhitungan Metrik Standar
+    avg_hit_rate = hits_k / len(queries)
     avg_mrr = np.mean(reciprocal_ranks)
     
-    return avg_hit_rate, avg_mrr, evaluation_logs
+    # Perhitungan Metrik Klasifikasi Retrieval (Sesuai Permintaan Spesifikasi)
+    acc_ret = hits_1 / len(queries)
+    rec_ret = avg_hit_rate # Karena relevan hanya 1, recall = 1 jika hit, 0 jika tidak
+    prec_ret = hits_k / (len(queries) * k)
+    f1_ret = 2 * (prec_ret * rec_ret) / (prec_ret + rec_ret) if (prec_ret + rec_ret) > 0 else 0
+    
+    return avg_hit_rate, avg_mrr, acc_ret, prec_ret, rec_ret, f1_ret, evaluation_logs
 
-# Jalankan evaluasi retrieval dengan k=5 sesuai default sistem
 ground_truths_retrieval = [q["ground_truth_case_id"] for q in test_queries]
-hit_rate_5, mrr_5, raw_retrieval_logs = eval_retrieval(test_queries, ground_truths_retrieval, k=5)
+hit_rate_5, mrr_5, acc_ret, prec_ret, rec_ret, f1_ret, raw_retrieval_logs = eval_retrieval(test_queries, ground_truths_retrieval, k=5)
 
-# Menyimpan hasil evaluasi retrieval ke format terstruktur data/eval/retrieval_metrics.csv
 df_ret_metrics = pd.DataFrame([
     {"Metric": "Hit_Rate@5", "Score": hit_rate_5, "Description": "Persentase kasus relevan berhasil masuk Top-5"},
-    {"Metric": "MRR@5", "Score": mrr_5, "Description": "Mean Reciprocal Rank (Kualitas urutan hasil pencarian)"}
+    {"Metric": "MRR@5", "Score": mrr_5, "Description": "Mean Reciprocal Rank"},
+    {"Metric": "Accuracy (Hit@1)", "Score": acc_ret, "Description": "Akurasi pencarian dokumen di urutan pertama"},
+    {"Metric": "Precision@5", "Score": prec_ret, "Description": "Proporsi dokumen relevan pada Top-5 hasil"},
+    {"Metric": "Recall@5", "Score": rec_ret, "Description": "Proporsi dokumen relevan yang berhasil ditemukan"},
+    {"Metric": "F1-Score@5", "Score": f1_ret, "Description": "Rata-rata harmonik Precision dan Recall retrieval"}
 ])
 
 try:
     df_ret_metrics.to_csv(RETRIEVAL_METRICS_PATH, index=False)
-    print(f"[✔] Sukses mengekspor metrik retrieval ke: '{RETRIEVAL_METRICS_PATH}'")
+    print(f"[OK] Sukses mengekspor metrik retrieval ke: '{RETRIEVAL_METRICS_PATH}'")
 except PermissionError:
     print("[WARNING] Gagal menulis retrieval_metrics.csv, pastikan file sedang tidak dibuka di Excel.")
 
@@ -185,7 +197,7 @@ def eval_prediction():
     
     try:
         df_pred_metrics.to_csv(PREDICTION_METRICS_PATH, index=False)
-        print(f"[✔] Sukses mengekspor metrik prediksi ke: '{PREDICTION_METRICS_PATH}'")
+        print(f"[OK] Sukses mengekspor metrik prediksi ke: '{PREDICTION_METRICS_PATH}'")
     except PermissionError:
         print("[WARNING] Gagal menulis prediction_metrics.csv, pastikan file sedang tidak dibuka di Excel.")
         
@@ -198,29 +210,35 @@ acc_score, prec_score, rec_score, f1_score_val = eval_prediction()
 # =====================================================================
 def display_evaluation_dashboard():
     print("\n" + "="*80)
-    print("      🏆 HASIL EVALUASI AKHIR SISTEM CBR - HUKUM MEREK UMM (TAHAP 5) 🏆")
+    print("  HASIL EVALUASI AKHIR SISTEM CBR - HUKUM MEREK UMM (TAHAP 5)")
     print("="*80)
     
     # 1. Tampilkan Metrik Riset Pencarian Dokumen (Retrieval)
     print("\n[A. PERFORMA RETRIEVAL KASUS (COSINE SIMILARITY)]")
-    print(f"  ├─ Hit Rate@5 (Akurasi Carian)  : {hit_rate_5:.2%}")
-    print(f"  ├─ MRR@5 (Kualitas Urutan Rank) : {mrr_5:.4f}")
+    print(f"  Hit Rate@5 (Akurasi Carian)  : {hit_rate_5:.2%}")
+    print(f"  MRR@5 (Kualitas Urutan Rank) : {mrr_5:.4f}")
+    print(f"  Accuracy (Hit@1)             : {acc_ret:.2%}")
+    print(f"  Precision@5                  : {prec_ret:.2%}")
+    print(f"  Recall@5                     : {rec_ret:.2%}")
+    print(f"  F1-Score@5                   : {f1_ret:.2%}")
     
     # Visualisasi Bar Chart Sederhana di Konsol
-    bar_hit = "█" * int(hit_rate_5 * 20) + "░" * (20 - int(hit_rate_5 * 20))
-    bar_mrr = "█" * int(mrr_5 * 20) + "░" * (20 - int(mrr_5 * 20))
-    print(f"  ├─ Visualisasi Hit Rate@5       : [{bar_hit}] {hit_rate_5:.1%}")
-    print(f"  └─ Visualisasi MRR@5            : [{bar_mrr}] {mrr_5:.3f}")
+    bar_hit = "#" * int(hit_rate_5 * 20) + "-" * (20 - int(hit_rate_5 * 20))
+    bar_mrr = "#" * int(mrr_5 * 20) + "-" * (20 - int(mrr_5 * 20))
+    bar_acc_ret = "#" * int(acc_ret * 20) + "-" * (20 - int(acc_ret * 20))
+    print(f"  Visualisasi Hit Rate@5       : [{bar_hit}] {hit_rate_5:.1%}")
+    print(f"  Visualisasi MRR@5            : [{bar_mrr}] {mrr_5:.3f}")
+    print(f"  Visualisasi Accuracy         : [{bar_acc_ret}] {acc_ret:.1%}")
     
     # 2. Tampilkan Metrik Keputusan Solusi Akhir (Prediction)
     print("\n[B. PERFORMA PREDIKSI PUTUSAN HUKUM (WEIGHTED SIMILARITY)]")
-    print(f"  ├─ Akurasi Klasifikasi (Accuracy) : {acc_score:.2%}")
-    print(f"  ├─ Presisi Model (Precision)      : {prec_score:.2%}")
-    print(f"  ├─ Sensitivitas Model (Recall)    : {rec_score:.2%}")
-    print(f"  └─ Skor F1 (F1-Score)             : {f1_score_val:.2%}")
+    print(f"  Akurasi Klasifikasi (Accuracy) : {acc_score:.2%}")
+    print(f"  Presisi Model (Precision)      : {prec_score:.2%}")
+    print(f"  Sensitivitas Model (Recall)    : {rec_score:.2%}")
+    print(f"  Skor F1 (F1-Score)             : {f1_score_val:.2%}")
     
-    bar_acc = "█" * int(acc_score * 20) + "░" * (20 - int(acc_score * 20))
-    print(f"  └─ Visualisasi Akurasi Akhir      : [{bar_acc}] {acc_score:.1%}")
+    bar_acc = "#" * int(acc_score * 20) + "-" * (20 - int(acc_score * 20))
+    print(f"  Visualisasi Akurasi Akhir      : [{bar_acc}] {acc_score:.1%}")
     
     # 3. ANALISIS KEGAGALAN (ERROR ANALYSIS & DISKUSI REJECTION)
     print("\n[C. ANALISIS KEGAGALAN & DISKUSI AKADEMIS (ERROR ANALYSIS)]")

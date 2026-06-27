@@ -153,8 +153,8 @@ def execute_tahap_1_pipeline():
         # Validasi integritas kualitas ekstraksi data
         is_valid, validation_msg = validate_extraction_integrity(raw_text, cleaned_text)
         
-        # Nama file output yang diseragamkan (.txt)
-        output_filename = os.path.splitext(filename)[0] + ".txt"
+        # Nama file output yang diseragamkan (.txt) dengan skema case_NN.txt
+        output_filename = f"case_{berhasil_proses + 1:02d}.txt"
         output_filepath = os.path.join(TXT_OUTPUT_DIR, output_filename)
         
         if is_valid:
@@ -164,7 +164,7 @@ def execute_tahap_1_pipeline():
             
             berhasil_proses += 1
             msg_success = f"BERHASIL: '{filename}' -> '{output_filename}' ({validation_msg})"
-            print(f"[✔] {msg_success}")
+            print(f"[OK] {msg_success}")
             log_activity(msg_success)
         else:
             gagal_proses += 1
