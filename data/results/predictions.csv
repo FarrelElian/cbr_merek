@@ -1,6 +1,8 @@
 query_id,predicted_solution,top_5_case_ids
-Q001,GUGATAN DITOLAK,"putusan_172_k_pdt.sus-hki_2024_20260503011819, putusan_1051_k_pdt.sus-hki_2023_20260604093712, putusan_532_k_pdt.sus-hki_2024_20260507042517, putusan_365_k_pdt.sus-hki_2023_20260605192112, putusan_10_pk_pdt.sus-hki_2024_20260509122228"
-Q002,GUGATAN DITOLAK,"putusan_1060_k_pdt.sus-hki_2023_20260604102858, putusan_172_k_pdt.sus-hki_2024_20260503011819, putusan_532_k_pdt.sus-hki_2024_20260507042517, putusan_365_k_pdt.sus-hki_2023_20260605192112, putusan_10_pk_pdt.sus-hki_2024_20260509122228"
-Q003,GUGATAN DITOLAK,"putusan_365_k_pdt.sus-hki_2023_20260605192112, putusan_465_k_pdt.sus-hki_2023_20260605192003, putusan_10_pk_pdt.sus-hki_2024_20260509122228, putusan_61_pk_pdt.sus-hki_2024_20260509111946, putusan_532_k_pdt.sus-hki_2024_20260507042517"
-Q004,GUGATAN DITOLAK,"putusan_172_k_pdt.sus-hki_2024_20260503011819, putusan_532_k_pdt.sus-hki_2024_20260507042517, putusan_11_pk_pdt.sus-hki_2023_20260605192024, putusan_365_k_pdt.sus-hki_2023_20260605192112, putusan_10_pk_pdt.sus-hki_2024_20260509122228"
-Q005,GUGATAN DITOLAK,"putusan_172_k_pdt.sus-hki_2024_20260503011819, putusan_365_k_pdt.sus-hki_2023_20260605192112, putusan_532_k_pdt.sus-hki_2024_20260507042517, putusan_10_pk_pdt.sus-hki_2024_20260509122228, putusan_379_k_pdt.sus-hki_2023_20260605191235"
+Q001,GUGATAN DITOLAK,"case_01, case_03, case_28, case_15, case_50"
+Q002,GUGATAN DITOLAK,"case_63, case_15, case_28, case_03, case_01"
+Q003,GUGATAN DITOLAK,"case_14, case_54, case_03, case_26, case_38"
+Q004,GUGATAN DIKABULKAN (PEMBATALAN / PENGHAPUSAN MEREK TERGUGAT),"case_26, case_14, case_03, case_39, case_31"
+Q005,GUGATAN DIKABULKAN (PEMBATALAN / PENGHAPUSAN MEREK TERGUGAT),"case_22, case_05, case_46, case_18, case_41"
+Q006,GUGATAN DITOLAK,"case_08, case_28, case_03, case_50, case_63"
+Q007,GUGATAN DITOLAK,"case_63, case_03, case_28, case_39, case_52"
