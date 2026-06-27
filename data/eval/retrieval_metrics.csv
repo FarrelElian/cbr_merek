@@ -1,3 +1,7 @@
 Metric,Score,Description
-Hit_Rate@5,0.8333333333333334,Persentase kasus relevan berhasil masuk Top-5
-MRR@5,0.5277777777777778,Mean Reciprocal Rank (Kualitas urutan hasil pencarian)
+Hit_Rate@5,0.5714285714285714,Persentase kasus relevan berhasil masuk Top-5
+MRR@5,0.4047619047619047,Mean Reciprocal Rank
+Accuracy (Hit@1),0.2857142857142857,Akurasi pencarian dokumen di urutan pertama
+Precision@5,0.11428571428571428,Proporsi dokumen relevan pada Top-5 hasil
+Recall@5,0.5714285714285714,Proporsi dokumen relevan yang berhasil ditemukan
+F1-Score@5,0.19047619047619044,Rata-rata harmonik Precision dan Recall retrieval

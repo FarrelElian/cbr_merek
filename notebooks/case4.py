@@ -139,8 +139,8 @@ def run_prediction_pipeline():
     print(" MEMULAI TAHAP 4: CASE SOLUTION REUSE (PREDIKSI PUTUSAN BARU)")
     print("="*80)
     
-    # Kita ambil maksimal 5 contoh kasus baru untuk demo manual sesuai rubrik tugas
-    demo_queries = test_queries[:5]
+    # Kita proses semua contoh kasus baru untuk demo manual sesuai rubrik tugas
+    demo_queries = test_queries
     
     predictions_table = []
     
@@ -166,17 +166,17 @@ def run_prediction_pipeline():
         
         # Tampilkan hasil demo yang informatif dan interaktif di konsol
         print(f"\n[Kasus Baru] ID: {q_id}")
-        print(f"  ├─ Ringkasan Gugatan: \"{q_text[:110]}...\"")
-        print(f"  ├─ Top-5 Kasus Mirip : {top_ids}")
-        print(f"  ├─ Skor Kemiripan   : {[round(c['similarity'], 4) for c in prediction_results['top_k_cases_detail']]}")
-        print(f"  ├─ Solusi Sebenarnya : {gt_solusi}")
-        print(f"  └─ Prediksi CBR (Weighted): {pred_solusi}")
+        print(f"  Ringkasan Gugatan: \"{q_text[:110]}...\"")
+        print(f"  Top-5 Kasus Mirip : {top_ids}")
+        print(f"  Skor Kemiripan   : {[round(c['similarity'], 4) for c in prediction_results['top_k_cases_detail']]}")
+        print(f"  Solusi Sebenarnya : {gt_solusi}")
+        print(f"  Prediksi CBR (Weighted): {pred_solusi}")
         
         # Indikator ketepatan sistem
         if pred_solusi == gt_solusi:
-            print("     🌟 Hasil Keputusan: TEPAT (Sesuai dengan Putusan Asli Hakim MA RI)")
+            print("  Hasil Keputusan: TEPAT (Sesuai dengan Putusan Asli Hakim MA RI)")
         else:
-            print("     ⚠️ Hasil Keputusan: Terdapat Perbedaan (Butuh Analisis Hukum Tambahan)")
+            print("  Hasil Keputusan: Terdapat Perbedaan (Butuh Analisis Hukum Tambahan)")
         print("-" * 75)
         
     # --- PROSES EKSPOR KE CSV ---
@@ -184,7 +184,7 @@ def run_prediction_pipeline():
     try:
         df_predictions = pd.DataFrame(predictions_table)
         df_predictions.to_csv(PREDICTIONS_CSV_PATH, index=False)
-        print(f"\n[✔] Sukses mengekspor hasil ke berkas: '{PREDICTIONS_CSV_PATH}'")
+        print(f"\n[OK] Sukses mengekspor hasil ke berkas: '{PREDICTIONS_CSV_PATH}'")
     except PermissionError:
         print("\n" + "!"*80)
         print(" GAGAL MENYIMPAN FILE HASIL PREDIKSI!")

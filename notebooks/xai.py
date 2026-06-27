@@ -10,14 +10,20 @@ import json
 import numpy as np
 import pandas as pd
 
-BASE_PATH = os.path.dirname(os.path.abspath(__file__)) if '__file__' in locals() else os.getcwd()
+# Arahkan CWD ke root proyek (satu level di atas folder notebooks/)
+# agar seluruh path relatif ke data/ dapat ditemukan dengan benar.
+_script_dir = os.path.dirname(os.path.abspath(__file__))
+if os.path.basename(_script_dir) == "notebooks":
+    os.chdir(os.path.dirname(_script_dir))
+
+BASE_PATH = os.getcwd()
 DATA_PATH = os.path.join(BASE_PATH, "data")
 PROCESSED_PATH = os.path.join(DATA_PATH, "processed")
 EVAL_PATH = os.path.join(DATA_PATH, "eval")
 
 # Pastikan folder Eval sudah dibuat untuk menyimpan visualisasi HTML nanti
 os.makedirs(EVAL_PATH, exist_ok=True)
-print(f"Direktori kerja lokal aktif: {BASE_PATH}")
+print(f"Direktori kerja aktif: {BASE_PATH}")
 
 # %% [markdown]
 # ## **Tahap 2: Load Case Base & Inisialisasi Model Search**
@@ -212,7 +218,7 @@ except Exception:
 # *Atribusi kemiripan leksikal murni (Dot-Product TF-IDF) yang berjalan sangat cepat dan andal secara lokal.*
 
 # %%
-def explain_lexical_similarity(query: str, retrieved_case_id: int):
+def explain_lexical_similarity(query: str, retrieved_case_id: str):
     """Menghitung kata mana saja yang berkontribusi nyata terhadap skor Cosine Similarity TF-IDF"""
     doc_idx = None
     for idx, case in enumerate(cases_list):
@@ -248,5 +254,5 @@ def explain_lexical_similarity(query: str, retrieved_case_id: int):
         for word, score in word_contributions[:6]:
             print(f"  -> Kata yang Cocok: '{word:<12}' | Skor Kontribusi Vektor: {score:.4f}")
 
-# Jalankan pengujian atribusi eksak untuk Kasus Rujukan ID 1
-explain_lexical_similarity(test_query, retrieved_case_id=1)
+# Jalankan pengujian atribusi eksak untuk Kasus Rujukan ID case_01
+explain_lexical_similarity(test_query, retrieved_case_id="case_01")

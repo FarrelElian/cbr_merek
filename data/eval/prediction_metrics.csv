@@ -1,5 +1,5 @@
 Metric,Score
-Accuracy,0.8
-Precision (Macro),0.4
-Recall (Macro),0.5
-F1-Score (Macro),0.4444444444444444
+Accuracy,0.42857142857142855
+Precision (Macro),0.3
+Recall (Macro),0.3
+F1-Score (Macro),0.3

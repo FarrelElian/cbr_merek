@@ -1,25 +1,24 @@
-DEPENDENSI SISTEM CASE-BASED REASONING (CBR) PUTUSAN MEREK
+# ============================================================
+# DEPENDENSI SISTEM CASE-BASED REASONING (CBR) PUTUSAN MEREK
+# Cara instalasi: pip install -r requirements.txt
+# ============================================================
 
-pip install -r requirements.txt
-
-TAHAP 1: AKUISISI & EKSTRAKSI TEKS PDF
-pypdf digunakan di notebooks/case1.py untuk mengekstrak isi teks bersih dari file PDF
-putusan asli Mahkamah Agung tanpa memerlukan instalasi perangkat lunak eksternal.
+# TAHAP 1: Ekstraksi teks dari file PDF putusan MA RI
 pypdf>=4.0.0
 
-TAHAP 2 & 4: REPRESENTASI DATA & MANIPULASI TABULAR
-pandas & numpy digunakan di notebooks/case2.py, case4.py, dan case5.py untuk
-mengelola struktur data tabular, ekspor file CSV/JSON, dan memanipulasi matriks.
+# TAHAP 2 & 4: Manipulasi data tabular dan ekspor CSV/JSON
 pandas>=2.0.0
 numpy>=1.24.0
 
-TAHAP 3 & 5: RETRIEVAL, VEKTORISASI, KLASIFIKASI, & EVALUASI METRIK
-scikit-learn menyediakan TfidfVectorizer untuk representasi fitur teks statistik,
-cosine_similarity untuk menghitung sudut kemiripan dokumen, model SVM (SVC)
-untuk memprediksi vonis sengketa, serta modul evaluasi metrics (accuracy, dll).
+# TAHAP 3 & 5: Vektorisasi TF-IDF, cosine similarity, SVM, metrik evaluasi
 scikit-learn>=1.2.0
 
-EKSTRA: EXPLAINABLE AI (XAI)
-lime digunakan di xai.py untuk menghasilkan interpretasi visual lokal (LIME)
-guna menjelaskan kata-kata kunci apa saja yang memengaruhi keputusan model SVM.
+# EKSTRA XAI: Explainable AI dengan LIME
 lime>=0.2.0
+
+# EKSTRA XAI: Model IndoBERT untuk representasi semantik di xai.py
+torch>=2.0.0
+transformers>=4.30.0
+
+# EKSTRA XAI: Tokenisasi berbasis NLTK di xai.py
+nltk>=3.8.0

@@ -56,8 +56,8 @@ print(f"[INFO] Berjaya memuatkan {len(cases_db)} kes dari pangkalan data.")
 # dengan nisbah standard akademis 80:20 mengikut arahan modul tugasan.
 train_cases, test_cases = train_test_split(cases_db, test_size=0.2, random_state=42)
 print(f"[INFO] Pembahagian Data Selesai (Nisbah 80:20):")
-print(f"       └─ Data Latihan (Train Set): {len(train_cases)} kes")
-print(f"       └─ Data Ujian (Test Set)   : {len(test_cases)} kes")
+print(f"       Data Latihan (Train Set): {len(train_cases)} kes")
+print(f"       Data Ujian (Test Set)   : {len(test_cases)} kes")
 
 # =====================================================================
 # 3. REPRESENTASI VEKTOR (TF-IDF VECTORIZATION)
@@ -135,50 +135,17 @@ def retrieve(query: str, k: int = 5):
 # kami membina penjana query automatik yang mengambil fakta dari pangkalan data sebenar
 # dan menetapkannya sebagai Ground-Truth secara dinamik!
 
-def generate_test_queries():
+def load_test_queries():
     """
-    Menghasilkan fail queries.json secara automatik berdasarkan kes sebenar
-    yang ada di dalam processed/cases.json untuk kegunaan fasa penilaian.
+    Memuat kes ujian pengesahan (queries.json) yang telah dibuat secara independen.
     """
-    print("[INFO] Menjana kes ujian pengesahan (queries.json) secara dinamik...")
-    
-    test_queries_list = []
-    # Ambil maksimum 6 kes berbeza dari pangkalan data sebagai asas soalan pengesahan
-    selected_samples = cases_db[:6] if len(cases_db) >= 6 else cases_db
-    
-    for idx, case in enumerate(selected_samples):
-        q_id = f"Q{idx+1:03d}"
-        
-        # Contoh rekaan pertanyaan hukum baru yang meniru teks ringkasan fakta kes terdahulu
-        query_text = (
-            f"Terdapat pendaftaran merek terdaftar atas nama pihak lawan yang dinilai memiliki persamaan pada pokoknya "
-            f"dengan merek terkenal milik kami yaitu '{case['merek_penggugat']}'. "
-            f"Objek sengketa adalah merek '{case['merek_tergugat']}' untuk kelas barang yang sejenis. "
-            f"Kami mohon pembatalan pendaftaran merek tersebut karena didasari iktikad tidak baik."
-        )
-        
-        # Jika kes adalah tentang penyingkiran/penghapusan merek akibat tidak digunakan (non-use)
-        if case["fakta_non_use"] == "YA":
-            query_text = (
-                f"Kami mengajukan gugatan penghapusan terhadap merek terdaftar '{case['merek_tergugat']}' "
-                f"dengan nomor perkara tersebut karena terbukti tidak digunakan secara berturut-turut selama "
-                f"3 tahun dalam perdagangan barang sejak tanggal pendaftaran terakhir."
-            )
-            
-        test_queries_list.append({
-            "query_id": q_id,
-            "query_text": query_text,
-            "ground_truth_case_id": case["case_id"],
-            "ground_truth_solusi": case["solusi_hukum"]
-        })
-        
-    with open(QUERIES_JSON_PATH, "w", encoding="utf-8") as json_out:
-        json.dump(test_queries_list, json_out, indent=4)
-        
-    print(f"[✔] Fail '{QUERIES_JSON_PATH}' berjaya dijana dengan {len(test_queries_list)} kes ujian.")
+    print(f"[INFO] Memuat kes ujian pengesahan dari '{QUERIES_JSON_PATH}'...")
+    with open(QUERIES_JSON_PATH, "r", encoding="utf-8") as json_in:
+        test_queries_list = json.load(json_in)
+    print(f"[OK] Berjaya memuat {len(test_queries_list)} kes ujian.")
     return test_queries_list
 
-test_queries = generate_test_queries()
+test_queries = load_test_queries()
 
 # =====================================================================
 # 7. PENGUJIAN AWAL PIPELINE RETRIEVAL
@@ -191,8 +158,8 @@ def run_initial_retrieval_test():
     
     for q in test_queries[:3]:  # Papar 3 query sahaja untuk demo konsol yang bersih
         print(f"\n[Query Ujian] ID: {q['query_id']}")
-        print(f"  └─ Fakta Baru : \"{q['query_text'][:120]}...\"")
-        print(f"  └─ Sasaran GT : {q['ground_truth_case_id']} ({q['ground_truth_solusi']})")
+        print(f"  Fakta Baru : \"{q['query_text'][:120]}...\"")
+        print(f"  Sasaran GT : {q['ground_truth_case_id']} ({q['ground_truth_solusi']})")
         
         # Jalankan fungsi retrieve() utama
         results = retrieve(q["query_text"], k=3)
@@ -201,12 +168,12 @@ def run_initial_retrieval_test():
         query_vector = vectorizer.transform([preprocess_query(q["query_text"])])
         predicted_class = svm_model.predict(query_vector)[0]
         
-        print(f"  └─ Hasil Carian CBR (Top-3 Kes Serupa):")
+        print(f"  Hasil Carian CBR (Top-3 Kes Serupa):")
         for rank, res in enumerate(results):
-            indicator = "⭐ [TEPAT]" if res["case_id"] == q["ground_truth_case_id"] else " "
+            indicator = "[TEPAT]" if res["case_id"] == q["ground_truth_case_id"] else ""
             print(f"     {rank+1}. Kes ID: {res['case_id']} | Nilai Mirip: {res['similarity']:.4f} | Merek: {res['merek_penggugat']} VS {res['merek_tergugat']} {indicator}")
             
-        print(f"  └─ Ramalan Keputusan Model (SVM): {predicted_class}")
+        print(f"  Ramalan Keputusan Model (SVM): {predicted_class}")
         print("-" * 60)
 
 if __name__ == "__main__":

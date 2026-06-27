@@ -168,6 +168,16 @@ def extract_metadata_from_text(text, filename):
     detail_solusi = amar_match.group(1).strip() if amar_match else "Amar putusan diserahkan pada pertimbangan majelis hakim."
     detail_solusi = re.sub(r'\s+', ' ', detail_solusi)[:250] + "..."
 
+    # 7. Ekstraksi Jenis Perkara (Kasasi, PK, PT TUN) dari no_perkara (karena filename sudah generik)
+    jenis_perkara = "Tidak Diketahui"
+    no_perkara_lower = no_perkara.lower()
+    if " k/" in no_perkara_lower or "/k/" in no_perkara_lower or "kasasi" in text.lower():
+        jenis_perkara = "Kasasi"
+    elif " pk/" in no_perkara_lower or "/pk/" in no_perkara_lower or "peninjauan kembali" in text.lower():
+        jenis_perkara = "Peninjauan Kembali"
+    elif "pt.tun" in no_perkara_lower or "pttun" in no_perkara_lower or "/b/" in no_perkara_lower or "tata usaha negara" in text.lower()[:500]:
+        jenis_perkara = "PT TUN"
+
     return {
         "no_perkara": no_perkara,
         "tanggal": tanggal_putusan,
@@ -178,7 +188,8 @@ def extract_metadata_from_text(text, filename):
         "merek_tergugat": merek_tergugat,
         "pasal_rujukan": pasal_terpakai,
         "solusi_hukum": solusi_hukum,
-        "detail_solusi": detail_solusi
+        "detail_solusi": detail_solusi,
+        "jenis_perkara": jenis_perkara
     }
 
 # =====================================================================
@@ -288,6 +299,7 @@ def execute_tahap_2_pipeline():
             "no_perkara": metadata["no_perkara"],
             "tanggal": metadata["tanggal"],
             "pihak": metadata["pihak"],
+            "jenis_perkara": metadata["jenis_perkara"],
             "pasal": metadata["pasal_rujukan"],
             "merek_penggugat": metadata["merek_penggugat"],
             "merek_tergugat": metadata["merek_tergugat"],
@@ -306,17 +318,17 @@ def execute_tahap_2_pipeline():
         
         structured_cases.append(case_representation)
         # Menampilkan cetakan yang informatif, melampirkan Pihak sekaligus nama Merek agar mudah diverifikasi
-        print(f"[✔] Terstruktur: {case_id}\n"
-              f"    └─ No: {metadata['no_perkara']} | {metadata['tanggal']}\n"
-              f"    └─ Pihak: {metadata['pihak']}\n"
-              f"    └─ Merek: {metadata['merek_penggugat']} VS {metadata['merek_tergugat']}\n")
+        print(f"[OK] Terstruktur: {case_id}\n"
+              f"     No: {metadata['no_perkara']} | {metadata['tanggal']}\n"
+              f"     Pihak: {metadata['pihak']}\n"
+              f"     Merek: {metadata['merek_penggugat']} VS {metadata['merek_tergugat']}\n")
         
     # --- PROSES PENYIMPANAN DATA ---
     # Menggunakan try-except block untuk mencegah crash jika file sedang dikunci oleh Excel
     try:
         with open(JSON_OUTPUT_PATH, "w", encoding="utf-8") as json_file:
             json.dump(structured_cases, json_file, indent=4)
-            print(f"[✔] Sukses menyimpan representasi kaya ke JSON.")
+            print(f"[OK] Sukses menyimpan representasi kaya ke JSON.")
     except PermissionError:
         print("\n" + "!"*80)
         print(" GAGAL MENYIMPAN FILE JSON!")
@@ -340,7 +352,7 @@ def execute_tahap_2_pipeline():
         df_final = df[kolom_wajib + kolom_tambahan]
         
         df_final.to_csv(CSV_OUTPUT_PATH, index=False)
-        print(f"[✔] Sukses mengekspor tabel ke CSV.")
+        print(f"[OK] Sukses mengekspor tabel ke CSV.")
     except PermissionError:
         print("\n" + "!"*80)
         print(" GAGAL MENYIMPAN FILE CSV!")

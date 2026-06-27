@@ -1,38 +1,44 @@
 [
     {
         "query_id": "Q001",
-        "query_text": "Terdapat pendaftaran merek terdaftar atas nama pihak lawan yang dinilai memiliki persamaan pada pokoknya dengan merek terkenal milik kami yaitu 'JOLLIBEE'. Objek sengketa adalah merek 'JOLLIBE E' untuk kelas barang yang sejenis. Kami mohon pembatalan pendaftaran merek tersebut karena didasari iktikad tidak baik.",
-        "ground_truth_case_id": "putusan_1051_k_pdt.sus-hki_2023_20260604093712",
+        "query_text": "Sebuah perusahaan makanan cepat saji asal Filipina yang telah beroperasi di Indonesia sejak lama mendapati pihak lain mendaftarkan merek restoran dengan nama yang hampir identik, hanya berbeda satu huruf di akhir. Kami memiliki bukti bahwa pendaftar mengetahui keberadaan merek kami sebelum mendaftarkan mereknya, sehingga pendaftaran tersebut dilakukan dengan iktikad tidak baik. Kami mengajukan gugatan pembatalan merek tersebut.",
+        "ground_truth_case_id": "case_01",
         "ground_truth_solusi": "GUGATAN DIKABULKAN (PEMBATALAN / PENGHAPUSAN MEREK TERGUGAT)"
     },
     {
         "query_id": "Q002",
-        "query_text": "Terdapat pendaftaran merek terdaftar atas nama pihak lawan yang dinilai memiliki persamaan pada pokoknya dengan merek terkenal milik kami yaitu 'SKY WA'. Objek sengketa adalah merek 'SKY' untuk kelas barang yang sejenis. Kami mohon pembatalan pendaftaran merek tersebut karena didasari iktikad tidak baik.",
-        "ground_truth_case_id": "putusan_1060_k_pdt.sus-hki_2023_20260604102858",
+        "query_text": "Penggugat adalah pemilik merek dagang produk pelumas mesin yang telah terdaftar di kelas yang relevan. Pihak tergugat mendaftarkan merek dengan kata yang hampir serupa namun diklaim memiliki cukup perbedaan dalam gaya penulisan dan logo. Pengadilan niaga tingkat pertama memenangkan penggugat, namun tergugat mengajukan kasasi dengan alasan hakim salah menerapkan hukum. Tergugat berpendapat mereknya berbeda secara keseluruhan.",
+        "ground_truth_case_id": "case_02",
         "ground_truth_solusi": "GUGATAN DITOLAK"
     },
     {
         "query_id": "Q003",
-        "query_text": "Terdapat pendaftaran merek terdaftar atas nama pihak lawan yang dinilai memiliki persamaan pada pokoknya dengan merek terkenal milik kami yaitu 'LOGO ORANG MENUNGGANG KUDA'. Objek sengketa adalah merek 'LOGO ORANG MENUNGGANG KUDA' untuk kelas barang yang sejenis. Kami mohon pembatalan pendaftaran merek tersebut karena didasari iktikad tidak baik.",
-        "ground_truth_case_id": "putusan_10_pk_pdt.sus-hki_2024_20260509122228",
+        "query_text": "Suatu perusahaan pakaian olahraga premium dari luar negeri keberatan terhadap penggunaan logo bergambar sosok manusia menunggangi kuda yang terdaftar oleh pihak lokal. Pemohon mengklaim logo tersebut merupakan merek terkenal yang dilindungi secara internasional dan penggunaan oleh pihak lain berpotensi menyesatkan konsumen. Permohonan peninjauan kembali diajukan setelah putusan kasasi menolak gugatan sebelumnya.",
+        "ground_truth_case_id": "case_03",
         "ground_truth_solusi": "GUGATAN DITOLAK"
     },
     {
         "query_id": "Q004",
-        "query_text": "Terdapat pendaftaran merek terdaftar atas nama pihak lawan yang dinilai memiliki persamaan pada pokoknya dengan merek terkenal milik kami yaitu 'PROFIL TANK'. Objek sengketa adalah merek 'TERKENAL' untuk kelas barang yang sejenis. Kami mohon pembatalan pendaftaran merek tersebut karena didasari iktikad tidak baik.",
-        "ground_truth_case_id": "putusan_11_pk_pdt.sus-hki_2023_20260605192024",
+        "query_text": "Pemohon peninjauan kembali adalah perusahaan yang sebelumnya kalah di tingkat kasasi dalam sengketa merek produk bahan bangunan. Pemohon berpendapat terdapat bukti baru yang menunjukkan bahwa merek tergugat sebenarnya merupakan tiruan dari merek terkenal internasional yang telah ada puluhan tahun sebelumnya. Hakim kasasi dianggap tidak mempertimbangkan bukti keterkenalan merek secara komprehensif.",
+        "ground_truth_case_id": "case_04",
         "ground_truth_solusi": "GUGATAN DITOLAK"
     },
     {
         "query_id": "Q005",
-        "query_text": "Terdapat pendaftaran merek terdaftar atas nama pihak lawan yang dinilai memiliki persamaan pada pokoknya dengan merek terkenal milik kami yaitu 'PT'. Objek sengketa adalah merek 'PT' untuk kelas barang yang sejenis. Kami mohon pembatalan pendaftaran merek tersebut karena didasari iktikad tidak baik.",
-        "ground_truth_case_id": "putusan_122_b_2025_pttun_jkt_20260509111605",
+        "query_text": "Sebuah perusahaan terdaftar resmi di Indonesia mengajukan gugatan ke Pengadilan Tata Usaha Negara terhadap keputusan Direktorat Jenderal Kekayaan Intelektual yang menolak permohonan pendaftaran mereknya. Penggugat berargumen bahwa penolakan tersebut tidak berdasar karena mereknya memiliki daya pembeda yang cukup dan tidak ada persamaan pada pokoknya dengan merek lain yang sudah terdaftar.",
+        "ground_truth_case_id": "case_05",
         "ground_truth_solusi": "GUGATAN DITOLAK"
     },
     {
         "query_id": "Q006",
-        "query_text": "Terdapat pendaftaran merek terdaftar atas nama pihak lawan yang dinilai memiliki persamaan pada pokoknya dengan merek terkenal milik kami yaitu 'SEGI TIGA'. Objek sengketa adalah merek 'SEGITIGA EMAS' untuk kelas barang yang sejenis. Kami mohon pembatalan pendaftaran merek tersebut karena didasari iktikad tidak baik.",
-        "ground_truth_case_id": "putusan_123_k_pdt.sus-hki_2023_20260605192325",
+        "query_text": "Pemilik merek produk kopi dalam kemasan mengajukan gugatan pembatalan terhadap merek kopi lain yang dinilai memiliki persamaan nama dan konsep desain. Tergugat berdalih bahwa kata dalam mereknya merupakan nama tempat yang tidak dapat dimiliki secara eksklusif. Majelis hakim harus mempertimbangkan apakah persamaan bunyi dan tampilan secara keseluruhan menimbulkan kebingungan di kalangan konsumen.",
+        "ground_truth_case_id": "case_08",
         "ground_truth_solusi": "GUGATAN DITOLAK"
+    },
+    {
+        "query_id": "Q007",
+        "query_text": "Perusahaan suplemen kesehatan mengajukan gugatan pembatalan merek karena kompetitor telah mendaftarkan merek dagang yang terdengar sangat mirip dengan produk suplemen populer milik penggugat yang sudah dipasarkan bertahun-tahun lebih awal. Penggugat memiliki data penjualan dan iklan yang membuktikan keterkenalan mereknya di pasar Indonesia sebelum tanggal pendaftaran merek tergugat.",
+        "ground_truth_case_id": "case_09",
+        "ground_truth_solusi": "GUGATAN DIKABULKAN (PEMBATALAN / PENGHAPUSAN MEREK TERGUGAT)"
     }
 ]
